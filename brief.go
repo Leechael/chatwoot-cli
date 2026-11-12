@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"os"
 	"regexp"
 	"sort"
 	"strconv"
@@ -250,6 +251,7 @@ func briefRenderList(rows []any) {
 }
 
 func addBrief(r *cobra.Command) {
+	var markReadAfter bool
 	briefCmd := &cobra.Command{Use: "brief [CONVERSATION_ID]", Short: "Show a support brief, or unread open conversations assigned to Leechael", Args: cobra.MaximumNArgs(1), RunE: func(c *cobra.Command, a []string) error {
 		if len(a) == 1 {
 			if _, e := strconv.ParseUint(a[0], 10, 64); e != nil {
@@ -263,6 +265,11 @@ func addBrief(r *cobra.Command) {
 				briefRenderOne(v)
 			} else if e := emit(v); e != nil {
 				return e
+			}
+			if markReadAfter {
+				if e := markRead(c.Context(), a[0]); e != nil {
+					fmt.Fprintf(os.Stderr, "warning: brief displayed but marking conversation %s read failed: %v\n", a[0], e)
+				}
 			}
 			return nil
 		}
@@ -307,5 +314,6 @@ func addBrief(r *cobra.Command) {
 		}
 		return emit(rows)
 	}}
+	briefCmd.Flags().BoolVar(&markReadAfter, "mark-read", false, "Mark the conversation read after displaying it")
 	r.AddCommand(briefCmd)
 }
