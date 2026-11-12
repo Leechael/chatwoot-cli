@@ -248,6 +248,210 @@ func TestReplyCommand(t *testing.T) {
 	}
 }
 
+func TestMarkReadCommand(t *testing.T) {
+	calls := []string{}
+	setup(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "POST" || !strings.HasSuffix(r.URL.Path, "/update_last_seen") {
+			t.Fatalf("unexpected request: %s %s", r.Method, r.URL.Path)
+		}
+		calls = append(calls, r.URL.Path)
+		fmt.Fprint(w, `{}`)
+	})
+	base := opt.base
+	r := root()
+	r.SetArgs([]string{"--base-url", base, "--token", "app-test", "--account-id", "1", "--json", "mark-read", "1434", "1435"})
+	if e := r.Execute(); e != nil {
+		t.Fatal(e)
+	}
+	if len(calls) != 2 || !strings.HasSuffix(calls[0], "/conversations/1434/update_last_seen") || !strings.HasSuffix(calls[1], "/conversations/1435/update_last_seen") {
+		t.Fatalf("mark-read calls: %v", calls)
+	}
+}
+
+func TestReplyFileAndTextPriority(t *testing.T) {
+	f := filepath.Join(t.TempDir(), "reply.txt")
+	if e := os.WriteFile(f, []byte("from file"), 0600); e != nil {
+		t.Fatal(e)
+	}
+	contents := []string{}
+	setup(t, func(w http.ResponseWriter, r *http.Request) {
+		var b map[string]any
+		if e := json.NewDecoder(r.Body).Decode(&b); e != nil {
+			t.Fatal(e)
+		}
+		contents = append(contents, b["content"].(string))
+		fmt.Fprint(w, `{"id":1}`)
+	})
+	base := opt.base
+	for _, args := range [][]string{
+		{"--base-url", base, "--token", "app-test", "--account-id", "1", "reply", "9", "--file", f, "--no-mark-read"},
+		{"--base-url", base, "--token", "app-test", "--account-id", "1", "reply", "9", "inline", "--file", f, "--no-mark-read"},
+	} {
+		r := root()
+		r.SetArgs(args)
+		if e := r.Execute(); e != nil {
+			t.Fatal(e)
+		}
+	}
+	if !strings.EqualFold(contents[0], "from file") || contents[1] != "inline" {
+		t.Fatalf("contents: %v", contents)
+	}
+}
+
+func TestReplyReadsStdin(t *testing.T) {
+	setup(t, func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasSuffix(r.URL.Path, "/messages") {
+			var b map[string]any
+			_ = json.NewDecoder(r.Body).Decode(&b)
+			if b["content"] != "from stdin" {
+				t.Fatalf("body: %v", b)
+			}
+			fmt.Fprint(w, `{"id":1}`)
+			return
+		}
+		fmt.Fprint(w, `{}`)
+	})
+	old := os.Stdin
+	in, out, e := os.Pipe()
+	if e != nil {
+		t.Fatal(e)
+	}
+	_, _ = out.WriteString("from stdin")
+	_ = out.Close()
+	os.Stdin = in
+	t.Cleanup(func() { _ = in.Close(); os.Stdin = old })
+	base := opt.base
+	r := root()
+	r.SetArgs([]string{"--base-url", base, "--token", "app-test", "--account-id", "1", "reply", "9"})
+	if e := r.Execute(); e != nil {
+		t.Fatal(e)
+	}
+}
+
+func TestReplyResolveAndAssign(t *testing.T) {
+	paths := []string{}
+	setup(t, func(w http.ResponseWriter, r *http.Request) {
+		paths = append(paths, r.URL.Path)
+		switch {
+		case strings.HasSuffix(r.URL.Path, "/messages"):
+			fmt.Fprint(w, `{"id":1}`)
+		case strings.HasSuffix(r.URL.Path, "/update_last_seen"):
+			fmt.Fprint(w, `{}`)
+		case r.URL.Path == "/api/v1/accounts/1/conversations/9/toggle_status":
+			fmt.Fprint(w, `{}`)
+		case r.URL.Path == "/api/v1/accounts/1/agents":
+			fmt.Fprint(w, `[{"id":7,"name":"Ada"}]`)
+		case strings.HasSuffix(r.URL.Path, "/assignments"):
+			fmt.Fprint(w, `{}`)
+		default:
+			t.Fatalf("unexpected path %s", r.URL.Path)
+		}
+	})
+	base := opt.base
+	r := root()
+	r.SetArgs([]string{"--base-url", base, "--token", "app-test", "--account-id", "1", "reply", "9", "hello", "--resolve", "--assign", "Ada"})
+	if e := r.Execute(); e != nil {
+		t.Fatal(e)
+	}
+	if len(paths) != 5 || !strings.HasSuffix(paths[2], "/toggle_status") || !strings.HasSuffix(paths[4], "/assignments") {
+		t.Fatalf("paths: %v", paths)
+	}
+}
+
+func TestReplyAutomaticallyMarksRead(t *testing.T) {
+	calls := []string{}
+	setup(t, func(w http.ResponseWriter, r *http.Request) {
+		calls = append(calls, r.URL.Path)
+		if strings.HasSuffix(r.URL.Path, "/messages") {
+			fmt.Fprint(w, `{"id":1}`)
+			return
+		}
+		if strings.HasSuffix(r.URL.Path, "/update_last_seen") {
+			fmt.Fprint(w, `{}`)
+			return
+		}
+		t.Fatalf("unexpected request: %s", r.URL.Path)
+	})
+	base := opt.base
+	r := root()
+	r.SetArgs([]string{"--base-url", base, "--token", "app-test", "--account-id", "1", "reply", "9", "hello"})
+	if e := r.Execute(); e != nil {
+		t.Fatal(e)
+	}
+	if len(calls) != 2 || !strings.HasSuffix(calls[1], "/conversations/9/update_last_seen") {
+		t.Fatalf("reply calls: %v", calls)
+	}
+}
+
+func TestReplyMarkReadFailureDoesNotFailReply(t *testing.T) {
+	calls := 0
+	setup(t, func(w http.ResponseWriter, r *http.Request) {
+		calls++
+		if strings.HasSuffix(r.URL.Path, "/messages") {
+			fmt.Fprint(w, `{"id":1}`)
+			return
+		}
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, `{"error":"mark read failed"}`)
+	})
+	base := opt.base
+	r := root()
+	r.SetArgs([]string{"--base-url", base, "--token", "app-test", "--account-id", "1", "reply", "9", "hello"})
+	if e := r.Execute(); e != nil {
+		t.Fatal(e)
+	}
+	if calls != 2 {
+		t.Fatalf("expected reply and warning-only mark-read calls, got %d", calls)
+	}
+}
+
+func TestBriefMarkRead(t *testing.T) {
+	seen := false
+	setup(t, func(w http.ResponseWriter, r *http.Request) {
+		switch r.URL.Path {
+		case "/api/v1/accounts/1/conversations/1434":
+			fmt.Fprint(w, `{"id":1434,"status":"open","sender":{"name":"Customer"}}`)
+		case "/api/v1/accounts/1/conversations/1434/messages":
+			if r.URL.Query().Get("before") == "" {
+				fmt.Fprint(w, `{"payload":[{"id":11182,"message_type":"incoming","content":"hello"}]}`)
+			} else {
+				fmt.Fprint(w, `{"payload":[]}`)
+			}
+		case "/api/v1/accounts/1/conversations/1434/update_last_seen":
+			seen = true
+			fmt.Fprint(w, `{}`)
+		default:
+			t.Fatalf("unexpected path: %s", r.URL.Path)
+		}
+	})
+	base := opt.base
+	r := root()
+	r.SetArgs([]string{"--base-url", base, "--token", "app-test", "--account-id", "1", "brief", "1434", "--mark-read"})
+	if e := r.Execute(); e != nil {
+		t.Fatal(e)
+	}
+	if !seen {
+		t.Fatal("brief did not mark conversation read")
+	}
+}
+
+func TestBriefRenderListIncludesMessageID(t *testing.T) {
+	old := os.Stdout
+	out, in, e := os.Pipe()
+	if e != nil {
+		t.Fatal(e)
+	}
+	os.Stdout = in
+	briefRenderList([]any{map[string]any{"id": "1434", "sender": map[string]any{"name": "Customer"}, "preview": "hello", "last_customer_message_id": 11182}})
+	_ = in.Close()
+	os.Stdout = old
+	b, _ := io.ReadAll(out)
+	_ = out.Close()
+	if !strings.Contains(string(b), "#1434 Customer — hello [msg:11182]") {
+		t.Fatalf("output: %s", b)
+	}
+}
+
 func TestCanonicalPathCorrection(t *testing.T) {
 	old := "/accounts/{account_id}/conversations/{conversation_id}/messages"
 	if effectivePath(old) != "/api/v1"+old {
