@@ -168,21 +168,30 @@ func addTickets(r *cobra.Command) {
 	messages.Flags().StringVar(&before, "before", "", "Message ID cursor")
 	messages.Flags().BoolVar(&allMessages, "all", false, "Fetch complete history")
 	r.AddCommand(messages)
-	var internal bool
+	var internal, noMarkRead, resolve bool
+	var assignAgent, replyFile string
 	var attachments []string
 	reply := &cobra.Command{Use: "reply CONVERSATION_ID [TEXT]", Short: "Send a reply, internal note or attachments", Args: conversationArgs(-1), RunE: func(c *cobra.Command, a []string) error {
 		text := strings.Join(a[1:], " ")
 		if len(a) == 1 {
-			info, e := os.Stdin.Stat()
-			if e != nil {
-				return e
-			}
-			if info.Mode()&os.ModeCharDevice == 0 {
-				b, e := io.ReadAll(os.Stdin)
+			if replyFile != "" {
+				b, e := os.ReadFile(replyFile)
 				if e != nil {
 					return e
 				}
 				text = string(b)
+			} else {
+				info, e := os.Stdin.Stat()
+				if e != nil {
+					return e
+				}
+				if info.Mode()&os.ModeCharDevice == 0 {
+					b, e := io.ReadAll(os.Stdin)
+					if e != nil {
+						return e
+					}
+					text = string(b)
+				}
 			}
 		}
 		if strings.TrimSpace(text) == "" && len(attachments) == 0 {
@@ -193,6 +202,7 @@ func addTickets(r *cobra.Command) {
 			if e != nil {
 				return e
 			}
+			postReplyActions(c, a[0], internal, noMarkRead, resolve, assignAgent)
 			return emit(v)
 		}
 		files := []string{}
