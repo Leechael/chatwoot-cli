@@ -1,0 +1,3 @@
+The bundled openapi.json originates from Chatwoot (https://github.com/chatwoot/chatwoot), Copyright Chatwoot Inc. and contributors, under its MIT license for non-enterprise source. API specifications and product names remain attributable to Chatwoot. See https://github.com/chatwoot/chatwoot/blob/develop/LICENSE.
+Design references: Leechael/go-api-cli-playbook and Leechael/mava-cli (MIT). Implementation is independent, not an official Chatwoot product.
+Dependencies are recorded in go.mod and go.sum: Cobra/pflag/mousetrap (Apache-2.0), gojq/timefmt-go (MIT). Source license texts are present in vendored modules.
