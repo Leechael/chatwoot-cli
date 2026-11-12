@@ -195,6 +195,37 @@ func TestBearer(t *testing.T) {
 		t.Fatal(e)
 	}
 }
+func TestAgentsCommandDefaultsToAccountOne(t *testing.T) {
+	setup(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "GET" || r.URL.Path != "/api/v1/accounts/1/agents" {
+			t.Fatalf("unexpected request: %s %s", r.Method, r.URL.Path)
+		}
+		fmt.Fprint(w, `[{"id":7,"name":"Ada","email":"ada@example.com","role":"administrator"}]`)
+	})
+	opt.account = ""
+	base := opt.base
+	r := root()
+	r.SetArgs([]string{"--base-url", base, "--token", "app-test", "--json", "agents"})
+	if e := r.Execute(); e != nil {
+		t.Fatal(e)
+	}
+}
+
+func TestAgentsCommandUsesAccountID(t *testing.T) {
+	setup(t, func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/api/v1/accounts/42/agents" {
+			t.Fatalf("unexpected request path: %s", r.URL.Path)
+		}
+		fmt.Fprint(w, `[]`)
+	})
+	base := opt.base
+	r := root()
+	r.SetArgs([]string{"--base-url", base, "--token", "app-test", "--account-id", "42", "agents"})
+	if e := r.Execute(); e != nil {
+		t.Fatal(e)
+	}
+}
+
 func TestReplyCommand(t *testing.T) {
 	setup(t, func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/api/v1/accounts/1/conversations/9/messages" || r.Method != "POST" {
