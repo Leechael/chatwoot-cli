@@ -1,6 +1,6 @@
 # Chatwoot CLI
 
-An independent Go command-line client for Chatwoot. It combines convenient support-inbox commands with a generic interface to every operation in the bundled official OpenAPI specification. It is not an official Chatwoot product and does not require Phala.
+An independent Go command-line client for Chatwoot. It combines convenient support-inbox commands with a generic interface to every operation in the bundled official OpenAPI specification. It is not an official Chatwoot product.
 
 **Scope:** 157 documented operations in this snapshot, covering the application, client/public, and platform APIs. This is complete coverage of the bundled specification, not a claim that every undocumented Chatwoot route is supported or that every operation has been exercised against a live server. See [scope and provenance](docs/SCOPE.md).
 
@@ -132,9 +132,9 @@ Use an explicit method and server-relative path for a newer or undocumented rout
 
 `api raw` accepts the same query/body/form/file options. Supply actual IDs in its path. Raw access does not grant extra server permissions, make an undocumented route stable, or provide automatic pagination. Do not put secrets in paths or query strings.
 
-## Automation and optional Phala use
+## Automation
 
-The CLI can run as a normal subprocess in a local script, CI job, or a Phala-hosted service. Phala is optional: no Phala API, SDK, wallet, attestation, or deployment setup is required for ordinary use. To integrate it into an existing service, inject the Chatwoot environment variables through that service's secret store, use JSON output, check process exit status, and scope the credential to the accounts and operations the job needs. Deploying to Phala or configuring its secrets is outside this repository's verified scope.
+The CLI can run as a normal subprocess in a local script or CI job. To integrate it into an existing service, inject the Chatwoot environment variables through that service's secret store, use JSON output, check process exit status, and scope the credential to the accounts and operations the job needs.
 
 Do not automatically retry a failed or interrupted write without checking its outcome. A server may have accepted a message even if the response was lost. Respect rate limits and avoid logging full conversation bodies, attachment contents, credentials, or customer identifiers.
 
