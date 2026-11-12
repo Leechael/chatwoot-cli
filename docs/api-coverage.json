@@ -1,0 +1,1422 @@
+{
+  "source": "https://github.com/chatwoot/chatwoot/blob/develop/swagger/swagger.json",
+  "source_blob_sha": "071dbc4a27dadbeafcc59566626d574d8a22363c",
+  "retrieved": "2026-11-11",
+  "sha256": "51c3ac66d5c1959337167f553ca3be0407a239ac5f32674ae6aea6add348f425",
+  "count": 157,
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/platform/api/v1/accounts",
+      "operation_id": "create-an-account",
+      "command": "api call create-an-account",
+      "tags": [
+        "Accounts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/platform/api/v1/accounts/{account_id}",
+      "operation_id": "get-details-of-an-account",
+      "command": "api call get-details-of-an-account",
+      "tags": [
+        "Accounts"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/platform/api/v1/accounts/{account_id}",
+      "operation_id": "update-an-account",
+      "command": "api call update-an-account",
+      "tags": [
+        "Accounts"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/platform/api/v1/accounts/{account_id}",
+      "operation_id": "delete-an-account",
+      "command": "api call delete-an-account",
+      "tags": [
+        "Accounts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/platform/api/v1/accounts/{account_id}/account_users",
+      "operation_id": "list-all-account-users",
+      "command": "api call list-all-account-users",
+      "tags": [
+        "Account Users"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/platform/api/v1/accounts/{account_id}/account_users",
+      "operation_id": "create-an-account-user",
+      "command": "api call create-an-account-user",
+      "tags": [
+        "Account Users"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/platform/api/v1/accounts/{account_id}/account_users",
+      "operation_id": "delete-an-account-user",
+      "command": "api call delete-an-account-user",
+      "tags": [
+        "Account Users"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/platform/api/v1/agent_bots",
+      "operation_id": "list-all-agent-bots",
+      "command": "api call list-all-agent-bots",
+      "tags": [
+        "AgentBots"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/platform/api/v1/agent_bots",
+      "operation_id": "create-an-agent-bot",
+      "command": "api call create-an-agent-bot",
+      "tags": [
+        "AgentBots"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/platform/api/v1/agent_bots/{id}",
+      "operation_id": "get-details-of-a-single-agent-bot",
+      "command": "api call get-details-of-a-single-agent-bot",
+      "tags": [
+        "AgentBots"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/platform/api/v1/agent_bots/{id}",
+      "operation_id": "update-an-agent-bot",
+      "command": "api call update-an-agent-bot",
+      "tags": [
+        "AgentBots"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/platform/api/v1/agent_bots/{id}",
+      "operation_id": "delete-an-agent-bot",
+      "command": "api call delete-an-agent-bot",
+      "tags": [
+        "AgentBots"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/platform/api/v1/users",
+      "operation_id": "create-a-user",
+      "command": "api call create-a-user",
+      "tags": [
+        "Users"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/platform/api/v1/users/{id}",
+      "operation_id": "get-details-of-a-user",
+      "command": "api call get-details-of-a-user",
+      "tags": [
+        "Users"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/platform/api/v1/users/{id}",
+      "operation_id": "update-a-user",
+      "command": "api call update-a-user",
+      "tags": [
+        "Users"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/platform/api/v1/users/{id}",
+      "operation_id": "delete-a-user",
+      "command": "api call delete-a-user",
+      "tags": [
+        "Users"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/platform/api/v1/users/{id}/login",
+      "operation_id": "get-sso-url-of-a-user",
+      "command": "api call get-sso-url-of-a-user",
+      "tags": [
+        "Users"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/platform/api/v1/users/{id}/token",
+      "operation_id": "post-user-token",
+      "command": "api call post-user-token",
+      "tags": [
+        "Users"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}",
+      "operation_id": "get-details-of-a-inbox",
+      "command": "api call get-details-of-a-inbox",
+      "tags": [
+        "Inbox API"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts",
+      "operation_id": "create-a-contact",
+      "command": "api call create-a-contact",
+      "tags": [
+        "Contacts API"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}",
+      "operation_id": "get-details-of-a-contact",
+      "command": "api call get-details-of-a-contact",
+      "tags": [
+        "Contacts API"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}",
+      "operation_id": "update-a-contact",
+      "command": "api call update-a-contact",
+      "tags": [
+        "Contacts API"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}/conversations",
+      "operation_id": "create-a-conversation",
+      "command": "api call create-a-conversation",
+      "tags": [
+        "Conversations API"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}/conversations",
+      "operation_id": "list-all-contact-conversations",
+      "command": "api call list-all-contact-conversations",
+      "tags": [
+        "Conversations API"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}/conversations/{conversation_id}",
+      "operation_id": "get-single-conversation",
+      "command": "api call get-single-conversation",
+      "tags": [
+        "Conversations API"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}/conversations/{conversation_id}/toggle_status",
+      "operation_id": "resolve-conversation",
+      "command": "api call resolve-conversation",
+      "tags": [
+        "Conversations API"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}/conversations/{conversation_id}/toggle_typing",
+      "operation_id": "toggle-typing-status",
+      "command": "api call toggle-typing-status",
+      "tags": [
+        "Conversations API"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}/conversations/{conversation_id}/update_last_seen",
+      "operation_id": "update-last-seen",
+      "command": "api call update-last-seen",
+      "tags": [
+        "Conversations API"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}/conversations/{conversation_id}/messages",
+      "operation_id": "create-a-message",
+      "command": "api call create-a-message",
+      "tags": [
+        "Messages API"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}/conversations/{conversation_id}/messages",
+      "operation_id": "list-all-conversation-messages",
+      "command": "api call list-all-conversation-messages",
+      "tags": [
+        "Messages API"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/public/api/v1/inboxes/{inbox_identifier}/contacts/{contact_identifier}/conversations/{conversation_id}/messages/{message_id}",
+      "operation_id": "update-a-message",
+      "command": "api call update-a-message",
+      "tags": [
+        "Messages API"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/survey/responses/{conversation_uuid}",
+      "operation_id": "get-csat-survey-page",
+      "command": "api call get-csat-survey-page",
+      "tags": [
+        "CSAT Survey Page"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}",
+      "operation_id": "get-account-details",
+      "command": "api call get-account-details",
+      "tags": [
+        "Account"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}",
+      "operation_id": "update-account",
+      "command": "api call update-account",
+      "tags": [
+        "Account"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/audit_logs",
+      "operation_id": "get-account-audit-logs",
+      "command": "api call get-account-audit-logs",
+      "tags": [
+        "Audit Logs"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/agent_bots",
+      "operation_id": "list-all-account-agent-bots",
+      "command": "api call list-all-account-agent-bots",
+      "tags": [
+        "Account AgentBots"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/agent_bots",
+      "operation_id": "create-an-account-agent-bot",
+      "command": "api call create-an-account-agent-bot",
+      "tags": [
+        "Account AgentBots"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/agent_bots/{id}",
+      "operation_id": "get-details-of-a-single-account-agent-bot",
+      "command": "api call get-details-of-a-single-account-agent-bot",
+      "tags": [
+        "Account AgentBots"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/agent_bots/{id}",
+      "operation_id": "update-an-account-agent-bot",
+      "command": "api call update-an-account-agent-bot",
+      "tags": [
+        "Account AgentBots"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/agent_bots/{id}",
+      "operation_id": "delete-an-account-agent-bot",
+      "command": "api call delete-an-account-agent-bot",
+      "tags": [
+        "Account AgentBots"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/agents",
+      "operation_id": "get-account-agents",
+      "command": "api call get-account-agents",
+      "tags": [
+        "Agents"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/agents",
+      "operation_id": "add-new-agent-to-account",
+      "command": "api call add-new-agent-to-account",
+      "tags": [
+        "Agents"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/agents/{id}",
+      "operation_id": "update-agent-in-account",
+      "command": "api call update-agent-in-account",
+      "tags": [
+        "Agents"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/agents/{id}",
+      "operation_id": "delete-agent-from-account",
+      "command": "api call delete-agent-from-account",
+      "tags": [
+        "Agents"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/canned_responses",
+      "operation_id": "get-account-canned-response",
+      "command": "api call get-account-canned-response",
+      "tags": [
+        "Canned Responses"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/canned_responses",
+      "operation_id": "add-new-canned-response-to-account",
+      "command": "api call add-new-canned-response-to-account",
+      "tags": [
+        "Canned Responses"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/canned_responses/{id}",
+      "operation_id": "update-canned-response-in-account",
+      "command": "api call update-canned-response-in-account",
+      "tags": [
+        "Canned Responses"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/canned_responses/{id}",
+      "operation_id": "delete-canned-response-from-account",
+      "command": "api call delete-canned-response-from-account",
+      "tags": [
+        "Canned Responses"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/custom_attribute_definitions",
+      "operation_id": "get-account-custom-attribute",
+      "command": "api call get-account-custom-attribute",
+      "tags": [
+        "Custom Attributes"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/custom_attribute_definitions",
+      "operation_id": "add-new-custom-attribute-to-account",
+      "command": "api call add-new-custom-attribute-to-account",
+      "tags": [
+        "Custom Attributes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/custom_attribute_definitions/{id}",
+      "operation_id": "get-details-of-a-single-custom-attribute",
+      "command": "api call get-details-of-a-single-custom-attribute",
+      "tags": [
+        "Custom Attributes"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/custom_attribute_definitions/{id}",
+      "operation_id": "update-custom-attribute-in-account",
+      "command": "api call update-custom-attribute-in-account",
+      "tags": [
+        "Custom Attributes"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/custom_attribute_definitions/{id}",
+      "operation_id": "delete-custom-attribute-from-account",
+      "command": "api call delete-custom-attribute-from-account",
+      "tags": [
+        "Custom Attributes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/contacts",
+      "operation_id": "contactList",
+      "command": "api call contactList",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/contacts",
+      "operation_id": "contactCreate",
+      "command": "api call contactCreate",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/contacts/{id}",
+      "operation_id": "contactDetails",
+      "command": "api call contactDetails",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/accounts/{account_id}/contacts/{id}",
+      "operation_id": "contactUpdate",
+      "command": "api call contactUpdate",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/contacts/{id}",
+      "operation_id": "contactDelete",
+      "command": "api call contactDelete",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/contacts/{id}/conversations",
+      "operation_id": "contactConversations",
+      "command": "api call contactConversations",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/contacts/{id}/labels",
+      "operation_id": "list-all-labels-of-a-contact",
+      "command": "api call list-all-labels-of-a-contact",
+      "tags": [
+        "Contact Labels"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/contacts/{id}/labels",
+      "operation_id": "contact-add-labels",
+      "command": "api call contact-add-labels",
+      "tags": [
+        "Contact Labels"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/contacts/search",
+      "operation_id": "contactSearch",
+      "command": "api call contactSearch",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/contacts/filter",
+      "operation_id": "contactFilter",
+      "command": "api call contactFilter",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/contacts/{id}/contact_inboxes",
+      "operation_id": "contactInboxCreation",
+      "command": "api call contactInboxCreation",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/contacts/{id}/contactable_inboxes",
+      "operation_id": "contactableInboxesGet",
+      "command": "api call contactableInboxesGet",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/actions/contact_merge",
+      "operation_id": "contactMerge",
+      "command": "api call contactMerge",
+      "tags": [
+        "Contacts"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/automation_rules",
+      "operation_id": "get-account-automation-rule",
+      "command": "api call get-account-automation-rule",
+      "tags": [
+        "Automation Rule"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/automation_rules",
+      "operation_id": "add-new-automation-rule-to-account",
+      "command": "api call add-new-automation-rule-to-account",
+      "tags": [
+        "Automation Rule"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/automation_rules/{id}",
+      "operation_id": "get-details-of-a-single-automation-rule",
+      "command": "api call get-details-of-a-single-automation-rule",
+      "tags": [
+        "Automation Rule"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/automation_rules/{id}",
+      "operation_id": "update-automation-rule-in-account",
+      "command": "api call update-automation-rule-in-account",
+      "tags": [
+        "Automation Rule"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/automation_rules/{id}",
+      "operation_id": "delete-automation-rule-from-account",
+      "command": "api call delete-automation-rule-from-account",
+      "tags": [
+        "Automation Rule"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/portals",
+      "operation_id": "add-new-portal-to-account",
+      "command": "api call add-new-portal-to-account",
+      "tags": [
+        "Help Center"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/portals",
+      "operation_id": "get-portal",
+      "command": "api call get-portal",
+      "tags": [
+        "Help Center"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/portals/{portal_slug}",
+      "operation_id": "get-details-of-a-single-portal",
+      "command": "api call get-details-of-a-single-portal",
+      "tags": [
+        "Help Center"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/portals/{portal_slug}",
+      "operation_id": "update-portal-to-account",
+      "command": "api call update-portal-to-account",
+      "tags": [
+        "Help Center"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/portals/{portal_slug}/categories",
+      "operation_id": "add-new-category-to-account",
+      "command": "api call add-new-category-to-account",
+      "tags": [
+        "Help Center"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/portals/{portal_slug}/articles",
+      "operation_id": "add-new-article-to-account",
+      "command": "api call add-new-article-to-account",
+      "tags": [
+        "Help Center"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/conversations/meta",
+      "operation_id": "conversationListMeta",
+      "command": "api call conversationListMeta",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/conversations",
+      "operation_id": "conversationList",
+      "command": "api call conversationList",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations",
+      "operation_id": "newConversation",
+      "command": "api call newConversation",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/filter",
+      "operation_id": "conversationFilter",
+      "command": "api call conversationFilter",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}",
+      "operation_id": "get-details-of-a-conversation",
+      "command": "api call get-details-of-a-conversation",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}",
+      "operation_id": "update-conversation",
+      "command": "api call update-conversation",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/toggle_status",
+      "operation_id": "toggle-status-of-a-conversation",
+      "command": "api call toggle-status-of-a-conversation",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/toggle_priority",
+      "operation_id": "toggle-priority-of-a-conversation",
+      "command": "api call toggle-priority-of-a-conversation",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/toggle_typing_status",
+      "operation_id": "toggle-typing-status-of-a-conversation",
+      "command": "api call toggle-typing-status-of-a-conversation",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/update_last_seen",
+      "operation_id": "conversationUpdateLastSeen",
+      "command": "api call conversationUpdateLastSeen",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/custom_attributes",
+      "operation_id": "update-custom-attributes-of-a-conversation",
+      "command": "api call update-custom-attributes-of-a-conversation",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/destroy_custom_attributes",
+      "operation_id": "destroy-custom-attributes-of-a-conversation",
+      "command": "api call destroy-custom-attributes-of-a-conversation",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/assignments",
+      "operation_id": "assign-a-conversation",
+      "command": "api call assign-a-conversation",
+      "tags": [
+        "Conversation Assignments"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/labels",
+      "operation_id": "list-all-labels-of-a-conversation",
+      "command": "api call list-all-labels-of-a-conversation",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/labels",
+      "operation_id": "conversation-add-labels",
+      "command": "api call conversation-add-labels",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/reporting_events",
+      "operation_id": "get-conversation-reporting-events",
+      "command": "api call get-conversation-reporting-events",
+      "tags": [
+        "Conversations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/branded_email_layout",
+      "operation_id": "getAccountBrandedEmailLayout",
+      "command": "api call getAccountBrandedEmailLayout",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/branded_email_layout",
+      "operation_id": "updateAccountBrandedEmailLayout",
+      "command": "api call updateAccountBrandedEmailLayout",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/inboxes",
+      "operation_id": "listAllInboxes",
+      "command": "api call listAllInboxes",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/inboxes",
+      "operation_id": "inboxCreation",
+      "command": "api call inboxCreation",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/inboxes/{id}",
+      "operation_id": "GetInbox",
+      "command": "api call GetInbox",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/inboxes/{id}",
+      "operation_id": "updateInbox",
+      "command": "api call updateInbox",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/inboxes/{id}/message_templates",
+      "operation_id": "listWhatsappMessageTemplates",
+      "command": "api call listWhatsappMessageTemplates",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/inboxes/{id}/agent_bot",
+      "operation_id": "getInboxAgentBot",
+      "command": "api call getInboxAgentBot",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/inboxes/{id}/set_agent_bot",
+      "operation_id": "updateAgentBot",
+      "command": "api call updateAgentBot",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/inbox_members/{inbox_id}",
+      "operation_id": "get-inbox-members",
+      "command": "api call get-inbox-members",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/inbox_members",
+      "operation_id": "add-new-agent-to-inbox",
+      "command": "api call add-new-agent-to-inbox",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/inbox_members",
+      "operation_id": "update-agents-in-inbox",
+      "command": "api call update-agents-in-inbox",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/inbox_members",
+      "operation_id": "delete-agent-in-inbox",
+      "command": "api call delete-agent-in-inbox",
+      "tags": [
+        "Inboxes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/labels",
+      "operation_id": "list-all-labels",
+      "command": "api call list-all-labels",
+      "tags": [
+        "Labels"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/labels",
+      "operation_id": "create-a-label",
+      "command": "api call create-a-label",
+      "tags": [
+        "Labels"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/labels/{id}",
+      "operation_id": "get-details-of-a-single-label",
+      "command": "api call get-details-of-a-single-label",
+      "tags": [
+        "Labels"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/labels/{id}",
+      "operation_id": "update-a-label",
+      "command": "api call update-a-label",
+      "tags": [
+        "Labels"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/labels/{id}",
+      "operation_id": "delete-a-label",
+      "command": "api call delete-a-label",
+      "tags": [
+        "Labels"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/messages",
+      "operation_id": "list-all-messages",
+      "command": "api call list-all-messages",
+      "tags": [
+        "Messages"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/messages",
+      "operation_id": "create-a-new-message-in-a-conversation",
+      "command": "api call create-a-new-message-in-a-conversation",
+      "tags": [
+        "Messages"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/messages/{message_id}",
+      "operation_id": "update-message-status",
+      "command": "api call update-message-status",
+      "tags": [
+        "Messages"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/conversations/{conversation_id}/messages/{message_id}",
+      "operation_id": "delete-a-message",
+      "command": "api call delete-a-message",
+      "tags": [
+        "Messages"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/integrations/apps",
+      "operation_id": "get-details-of-all-integrations",
+      "command": "api call get-details-of-all-integrations",
+      "tags": [
+        "Integrations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/integrations/hooks",
+      "operation_id": "create-an-integration-hook",
+      "command": "api call create-an-integration-hook",
+      "tags": [
+        "Integrations"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/integrations/hooks/{hook_id}",
+      "operation_id": "update-an-integrations-hook",
+      "command": "api call update-an-integrations-hook",
+      "tags": [
+        "Integrations"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/integrations/hooks/{hook_id}",
+      "operation_id": "delete-an-integration-hook",
+      "command": "api call delete-an-integration-hook",
+      "tags": [
+        "Integrations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/profile",
+      "operation_id": "fetchProfile",
+      "command": "api call fetchProfile",
+      "tags": [
+        "Profile"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/profile",
+      "operation_id": "updateProfile",
+      "command": "api call updateProfile",
+      "tags": [
+        "Profile"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/teams",
+      "operation_id": "list-all-teams",
+      "command": "api call list-all-teams",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/teams",
+      "operation_id": "create-a-team",
+      "command": "api call create-a-team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/teams/{team_id}",
+      "operation_id": "get-details-of-a-single-team",
+      "command": "api call get-details-of-a-single-team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/teams/{team_id}",
+      "operation_id": "update-a-team",
+      "command": "api call update-a-team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/teams/{team_id}",
+      "operation_id": "delete-a-team",
+      "command": "api call delete-a-team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/teams/{team_id}/team_members",
+      "operation_id": "get-team-members",
+      "command": "api call get-team-members",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/teams/{team_id}/team_members",
+      "operation_id": "add-new-agent-to-team",
+      "command": "api call add-new-agent-to-team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/teams/{team_id}/team_members",
+      "operation_id": "update-agents-in-team",
+      "command": "api call update-agents-in-team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/teams/{team_id}/team_members",
+      "operation_id": "delete-agent-in-team",
+      "command": "api call delete-agent-in-team",
+      "tags": [
+        "Teams"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/custom_filters",
+      "operation_id": "list-all-filters",
+      "command": "api call list-all-filters",
+      "tags": [
+        "Custom Filters"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/custom_filters",
+      "operation_id": "create-a-custom-filter",
+      "command": "api call create-a-custom-filter",
+      "tags": [
+        "Custom Filters"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/custom_filters/{custom_filter_id}",
+      "operation_id": "get-details-of-a-single-custom-filter",
+      "command": "api call get-details-of-a-single-custom-filter",
+      "tags": [
+        "Custom Filters"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/custom_filters/{custom_filter_id}",
+      "operation_id": "update-a-custom-filter",
+      "command": "api call update-a-custom-filter",
+      "tags": [
+        "Custom Filters"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/custom_filters/{custom_filter_id}",
+      "operation_id": "delete-a-custom-filter",
+      "command": "api call delete-a-custom-filter",
+      "tags": [
+        "Custom Filters"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/webhooks",
+      "operation_id": "list-all-webhooks",
+      "command": "api call list-all-webhooks",
+      "tags": [
+        "Webhooks"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/webhooks",
+      "operation_id": "create-a-webhook",
+      "command": "api call create-a-webhook",
+      "tags": [
+        "Webhooks"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/webhooks/{webhook_id}",
+      "operation_id": "update-a-webhook",
+      "command": "api call update-a-webhook",
+      "tags": [
+        "Webhooks"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/webhooks/{webhook_id}",
+      "operation_id": "delete-a-webhook",
+      "command": "api call delete-a-webhook",
+      "tags": [
+        "Webhooks"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/reporting_events",
+      "operation_id": "get-account-reporting-events",
+      "command": "api call get-account-reporting-events",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/reports",
+      "operation_id": "list-all-conversation-statistics",
+      "command": "api call list-all-conversation-statistics",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/reports/summary",
+      "operation_id": "list-all-conversation-statistics-summary",
+      "command": "api call list-all-conversation-statistics-summary",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/reports/conversations",
+      "operation_id": "get-account-conversation-metrics",
+      "command": "api call get-account-conversation-metrics",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/reports/conversations/",
+      "operation_id": "get-agent-conversation-metrics",
+      "command": "api call get-agent-conversation-metrics",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/summary_reports/channel",
+      "operation_id": "get-channel-summary-report",
+      "command": "api call get-channel-summary-report",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/summary_reports/inbox",
+      "operation_id": "get-inbox-summary-report",
+      "command": "api call get-inbox-summary-report",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/summary_reports/agent",
+      "operation_id": "get-agent-summary-report",
+      "command": "api call get-agent-summary-report",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/summary_reports/team",
+      "operation_id": "get-team-summary-report",
+      "command": "api call get-team-summary-report",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/reports/first_response_time_distribution",
+      "operation_id": "get-first-response-time-distribution",
+      "command": "api call get-first-response-time-distribution",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/reports/inbox_label_matrix",
+      "operation_id": "get-inbox-label-matrix",
+      "command": "api call get-inbox-label-matrix",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/accounts/{account_id}/reports/outgoing_messages_count",
+      "operation_id": "get-outgoing-messages-count",
+      "command": "api call get-outgoing-messages-count",
+      "tags": [
+        "Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/accounts/{account_id}/conversations/{conversation_id}/messages",
+      "operation_id": "getConversationMessages",
+      "command": "api call getConversationMessages",
+      "tags": [
+        "Conversation"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/campaigns",
+      "operation_id": "list-campaigns",
+      "command": "api call list-campaigns",
+      "tags": [
+        "Campaigns"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/accounts/{account_id}/campaigns",
+      "operation_id": "create-campaign",
+      "command": "api call create-campaign",
+      "tags": [
+        "Campaigns"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/{account_id}/campaigns/{id}",
+      "operation_id": "get-campaign",
+      "command": "api call get-campaign",
+      "tags": [
+        "Campaigns"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/accounts/{account_id}/campaigns/{id}",
+      "operation_id": "update-campaign",
+      "command": "api call update-campaign",
+      "tags": [
+        "Campaigns"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/accounts/{account_id}/campaigns/{id}",
+      "operation_id": "delete-campaign",
+      "command": "api call delete-campaign",
+      "tags": [
+        "Campaigns"
+      ]
+    }
+  ]
+}
