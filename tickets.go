@@ -168,21 +168,30 @@ func addTickets(r *cobra.Command) {
 	messages.Flags().StringVar(&before, "before", "", "Message ID cursor")
 	messages.Flags().BoolVar(&allMessages, "all", false, "Fetch complete history")
 	r.AddCommand(messages)
-	var internal bool
+	var internal, noMarkRead, resolve bool
+	var assignAgent, replyFile string
 	var attachments []string
 	reply := &cobra.Command{Use: "reply CONVERSATION_ID [TEXT]", Short: "Send a reply, internal note or attachments", Args: conversationArgs(-1), RunE: func(c *cobra.Command, a []string) error {
 		text := strings.Join(a[1:], " ")
 		if len(a) == 1 {
-			info, e := os.Stdin.Stat()
-			if e != nil {
-				return e
-			}
-			if info.Mode()&os.ModeCharDevice == 0 {
-				b, e := io.ReadAll(os.Stdin)
+			if replyFile != "" {
+				b, e := os.ReadFile(replyFile)
 				if e != nil {
 					return e
 				}
 				text = string(b)
+			} else {
+				info, e := os.Stdin.Stat()
+				if e != nil {
+					return e
+				}
+				if info.Mode()&os.ModeCharDevice == 0 {
+					b, e := io.ReadAll(os.Stdin)
+					if e != nil {
+						return e
+					}
+					text = string(b)
+				}
 			}
 		}
 		if strings.TrimSpace(text) == "" && len(attachments) == 0 {
@@ -193,6 +202,7 @@ func addTickets(r *cobra.Command) {
 			if e != nil {
 				return e
 			}
+			postReplyActions(c, a[0], internal, noMarkRead, resolve, assignAgent)
 			return emit(v)
 		}
 		files := []string{}
@@ -211,11 +221,46 @@ func addTickets(r *cobra.Command) {
 		if e != nil {
 			return e
 		}
+		postReplyActions(c, a[0], internal, noMarkRead, resolve, assignAgent)
 		return emit(v)
 	}}
 	reply.Flags().BoolVar(&internal, "internal", false, "Send a private/internal note")
+	reply.Flags().StringVar(&replyFile, "file", "", "Read reply text from file (TEXT takes priority)")
+	reply.Flags().BoolVar(&resolve, "resolve", false, "Resolve the conversation after sending")
+	reply.Flags().StringVar(&assignAgent, "assign", "", "Assign the conversation to an agent name after sending")
+	reply.Flags().BoolVar(&noMarkRead, "no-mark-read", false, "Do not mark the conversation read after sending")
 	reply.Flags().StringArrayVar(&attachments, "attachment", nil, "Attach file (repeatable)")
 	r.AddCommand(reply)
+	markReadCmd := &cobra.Command{Use: "mark-read CONVERSATION_ID...", Short: "Mark one or more conversations as read", Args: func(c *cobra.Command, a []string) error {
+		if err := cobra.MinimumNArgs(1)(c, a); err != nil {
+			return err
+		}
+		for _, id := range a {
+			if err := validateConversationID(id); err != nil {
+				return err
+			}
+		}
+		return nil
+	}, RunE: func(c *cobra.Command, a []string) error {
+		results := make([]any, 0, len(a))
+		for _, id := range a {
+			if err := markRead(c.Context(), id); err != nil {
+				return err
+			}
+			results = append(results, map[string]any{"conversation_id": id, "marked_read": true})
+		}
+		if !opt.json && !opt.plain && opt.jq == "" {
+			for _, id := range a {
+				fmt.Printf("conversation %s marked read\n", id)
+			}
+			return nil
+		}
+		if len(results) == 1 {
+			return emit(results[0])
+		}
+		return emit(results)
+	}}
+	r.AddCommand(markReadCmd)
 	r.AddCommand(&cobra.Command{Use: "update-status CONVERSATION_ID STATUS", Short: "Set conversation status", Args: conversationArgs(2), RunE: func(c *cobra.Command, a []string) error {
 		if !strings.Contains(" open resolved pending snoozed ", " "+a[1]+" ") {
 			return errors.New("invalid status")
@@ -288,6 +333,63 @@ func addTickets(r *cobra.Command) {
 
 }
 
+func validateConversationID(id string) error {
+	value, err := strconv.ParseUint(id, 10, 64)
+	if err != nil || value == 0 {
+		return errors.New("conversation ID must be a positive integer")
+	}
+	return nil
+}
+
+func postReplyActions(c *cobra.Command, conversationID string, internal, noMarkRead, resolve bool, assignAgent string) {
+	if !internal && !noMarkRead {
+		if e := markRead(c.Context(), conversationID); e != nil {
+			fmt.Fprintf(os.Stderr, "warning: reply sent but marking conversation %s read failed: %v\n", conversationID, e)
+		}
+	}
+	if resolve {
+		if _, e := callAccount(c.Context(), "POST", "/conversations/"+conversationID+"/toggle_status", nil, map[string]any{"status": "resolved"}); e != nil {
+			fmt.Fprintf(os.Stderr, "warning: reply sent but resolving conversation %s failed: %v\n", conversationID, e)
+		}
+	}
+	if assignAgent != "" {
+		if e := assignConversation(c.Context(), conversationID, assignAgent); e != nil {
+			fmt.Fprintf(os.Stderr, "warning: reply sent but assigning conversation %s failed: %v\n", conversationID, e)
+		}
+	}
+}
+
+func assignConversation(ctx context.Context, conversationID, agent string) error {
+	id, e := strconv.Atoi(agent)
+	if e != nil {
+		v, e := callAccount(ctx, "GET", "/agents", nil, nil)
+		if e != nil {
+			return e
+		}
+		matches := []int{}
+		for _, x := range payload(v) {
+			m, ok := x.(map[string]any)
+			if ok && strings.EqualFold(fmt.Sprint(m["name"]), agent) {
+				matches = append(matches, int(idOf(m)))
+			}
+		}
+		if len(matches) != 1 {
+			return errors.New("agent name must match exactly one agent; use numeric ID")
+		}
+		id = matches[0]
+	}
+	if id < 0 {
+		return errors.New("agent ID cannot be negative")
+	}
+	_, e = callAccount(ctx, "POST", "/conversations/"+conversationID+"/assignments", nil, map[string]any{"assignee_id": id})
+	return e
+}
+
+func markRead(ctx context.Context, id string) error {
+	_, err := callAccount(ctx, "POST", "/conversations/"+id+"/update_last_seen", nil, nil)
+	return err
+}
+
 func conversationArgs(count int) cobra.PositionalArgs {
 	return func(c *cobra.Command, a []string) error {
 		if count < 0 {
@@ -297,10 +399,6 @@ func conversationArgs(count int) cobra.PositionalArgs {
 		} else if err := cobra.ExactArgs(count)(c, a); err != nil {
 			return err
 		}
-		id, err := strconv.ParseUint(a[0], 10, 64)
-		if err != nil || id == 0 {
-			return errors.New("conversation ID must be a positive integer")
-		}
-		return nil
+		return validateConversationID(a[0])
 	}
 }

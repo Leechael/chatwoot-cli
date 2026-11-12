@@ -1,6 +1,6 @@
 # Chatwoot CLI
 
-An independent Go command-line client for Chatwoot. It combines convenient support-inbox commands with a generic interface to every operation in the bundled official OpenAPI specification. It is not an official Chatwoot product and does not require Phala.
+An independent Go command-line client for Chatwoot. It combines convenient support-inbox commands with a generic interface to every operation in the bundled official OpenAPI specification. It is not an official Chatwoot product.
 
 **Scope:** 157 documented operations in this snapshot, covering the application, client/public, and platform APIs. This is complete coverage of the bundled specification, not a claim that every undocumented Chatwoot route is supported or that every operation has been exercised against a live server. See [scope and provenance](docs/SCOPE.md).
 
@@ -64,6 +64,10 @@ Read-only examples:
 ./chatwoot-cli get 123 --json
 ./chatwoot-cli messages 123 --all --json
 ./chatwoot-cli messages 123 --before 456
+./chatwoot-cli mark-read 123 124 --json
+./chatwoot-cli brief 123
+./chatwoot-cli brief
+./chatwoot-cli brief 123 --mark-read
 ./chatwoot-cli search 'customer@example.com'
 ./chatwoot-cli integrations
 ./chatwoot-cli list-members
@@ -72,10 +76,30 @@ Read-only examples:
 
 `ls` is an alias for `list`. `search QUERY` searches contacts, not conversation messages; `contacts` returns the first contacts page. For further contact pages, use `api call contactList --query page=N`. `get` retrieves the conversation and full available message timeline. `messages --all` walks message history; `--before` supplies a message-history cursor. `list --page N` selects a page, while `list --all` walks pages. Pagination is based on the server's responses; concurrent inserts or deletions can change results while pages are being read. Large inboxes and histories require multiple requests and may encounter server rate limits.
 
+`brief ID` combines the conversation summary and all non-private customer messages, and extracts email addresses and app IDs from them. By default it prints a line-oriented human-readable brief; use `--json`, `--plain`, or `--jq` for the machine-readable formats. `--mark-read` marks the conversation read after displaying it. `brief` without an ID lists open unread conversations assigned to Leechael (agent ID 6), one conversation per line, ending with the last customer message ID as `[msg:MESSAGE_ID]`.
+
+Example default output:
+
+```text
+#1434 · open · assignee: Leechael · inbox 8
+Sender: Patrick Diller <patrick@example.com>
+
+== Customer messages ==
+[2026-11-12 11:19] Hello, I need help with my deployment.
+
+== Extracted ==
+Emails: patrick@example.com
+App IDs: none
+```
+
 The commands below **change server state**. Run them only with the appropriate authorization and against the intended account. They are examples, not a dry-run workflow:
 
 ```sh
 ./chatwoot-cli reply 123 'Thanks. We are checking this for you.'
+printf '%s' 'A long draft from stdin.' | ./chatwoot-cli reply 123
+./chatwoot-cli reply 123 --file ./draft.txt
+./chatwoot-cli reply 123 'Please resolve and assign this.' --resolve --assign Ada
+./chatwoot-cli reply 123 'Send without changing read state.' --no-mark-read
 printf '%s' 'Internal investigation notes.' | ./chatwoot-cli reply 123 --internal
 ./chatwoot-cli reply 123 'Attached is the requested file.' --attachment ./receipt.pdf
 ./chatwoot-cli reply 123 'Two files attached.' --attachment ./a.pdf --attachment ./b.pdf
@@ -83,7 +107,7 @@ printf '%s' 'Internal investigation notes.' | ./chatwoot-cli reply 123 --interna
 ./chatwoot-cli assign 123 7 --team-id 2
 ```
 
-`assign` accepts either an agent ID or a case-insensitive agent name. Prefer an ID for automation to avoid name ambiguity.
+`mark-read CONVERSATION_ID...` marks one or more conversations read using Chatwoot's `update_last_seen` endpoint. The default output is one human-readable line per conversation; `--json`, `--plain`, and `--jq` retain the standard machine-readable output modes. `reply` takes text from positional TEXT, then `--file PATH`, then non-TTY stdin (in that priority order). `--resolve` and `--assign AGENT_NAME` run after a successful send; failures are warnings and do not change the successful reply exit code. A successful non-internal `reply` automatically marks the conversation read; use `--no-mark-read` to opt out. If that follow-up call fails, the reply remains successful and a warning is printed. `assign` accepts either an agent ID or a case-insensitive agent name. Prefer an ID for automation to avoid name ambiguity.
 
 An internal reply is a private note, not a customer-visible outgoing reply. Attachments are uploaded to your Chatwoot server and may become available to the conversation's recipients. Verify the target conversation and contents first. Use a test account for write testing.
 
@@ -132,9 +156,9 @@ Use an explicit method and server-relative path for a newer or undocumented rout
 
 `api raw` accepts the same query/body/form/file options. Supply actual IDs in its path. Raw access does not grant extra server permissions, make an undocumented route stable, or provide automatic pagination. Do not put secrets in paths or query strings.
 
-## Automation and optional Phala use
+## Automation
 
-The CLI can run as a normal subprocess in a local script, CI job, or a Phala-hosted service. Phala is optional: no Phala API, SDK, wallet, attestation, or deployment setup is required for ordinary use. To integrate it into an existing service, inject the Chatwoot environment variables through that service's secret store, use JSON output, check process exit status, and scope the credential to the accounts and operations the job needs. Deploying to Phala or configuring its secrets is outside this repository's verified scope.
+The CLI can run as a normal subprocess in a local script or CI job. To integrate it into an existing service, inject the Chatwoot environment variables through that service's secret store, use JSON output, check process exit status, and scope the credential to the accounts and operations the job needs.
 
 Do not automatically retry a failed or interrupted write without checking its outcome. A server may have accepted a message even if the response was lost. Respect rate limits and avoid logging full conversation bodies, attachment contents, credentials, or customer identifiers.
 

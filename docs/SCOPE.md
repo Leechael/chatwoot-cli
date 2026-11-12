@@ -13,7 +13,6 @@ This scope deliberately does not promise:
 - An authenticated end-to-end test of all operations.
 - Client-side enforcement of every JSON Schema constraint.
 - Automatic pagination for arbitrary generic or raw API calls.
-- A deployment to Phala or any other host.
 
 `api raw` is the explicit escape hatch for routes outside the snapshot. Use it only with documentation and authorization appropriate to your server.
 

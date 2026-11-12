@@ -352,7 +352,9 @@ func root() *cobra.Command {
 	f.StringVar(&opt.jq, "jq", "", "In-process jq expression; requires --json")
 	f.DurationVar(&opt.timeout, "timeout", 30*time.Second, "HTTP request timeout")
 	r.AddCommand(apiCommands())
+	addAgents(r)
 	addTickets(r)
+	addBrief(r)
 	r.AddCommand(&cobra.Command{Use: "exit-codes", Run: func(c *cobra.Command, a []string) {
 		fmt.Println("0 success\n1 request, validation, transport or server error\n2 authentication or permission denied (401/403)\n3 not found (404)")
 	}})
